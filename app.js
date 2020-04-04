@@ -2,12 +2,15 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
+// Para acceder al directorio actual
+const path = require('path');
+
 
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
-//application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true })) //application/x-www-form-urlencoded
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
   res.send('Hola Mundo!');
