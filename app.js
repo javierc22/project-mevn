@@ -7,7 +7,11 @@ const path = require('path');
 
 // Conexión base de datos
 const mongoose = require('mongoose');
-const uri = 'mongodb://localhost:27017/udemy';
+// const uri = 'mongodb://localhost:27017/udemy';
+
+// Conexión en la nube
+const uri = 'mongodb+srv://user_udemy:O8mBBrEuPs03sdhH@project-mevn-mujzf.mongodb.net/udemy?retryWrites=true&w=majority';
+
 const options = {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true};
 
 // Or using promises
