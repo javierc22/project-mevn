@@ -18,6 +18,13 @@ const userSchema = new Schema({
 
 userSchema.plugin(uniqueValidator, { message: 'Error, esperaba {PATH} único' });
 
+// Ocultar propiedad "pass" de modelo "User" en una respuesta JSON
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.pass;
+  return obj;
+}
+
 // Convertir a un modelo
 const User = mongoose.model('User', userSchema);
 
