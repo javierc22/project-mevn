@@ -7,7 +7,7 @@ import User from '../models/user';
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-// POST
+// POST Usuario
 router.post('/nuevo-usuario', async(req, res) => {
   const body = {
     nombre: req.body.nombre,
@@ -19,9 +19,25 @@ router.post('/nuevo-usuario', async(req, res) => {
 
   try {
     const usuarioDB = await User.create(body);
-    res.json(usuarioDB);
+    return res.json(usuarioDB);
   } catch (error) {
     return res.status(500).json({
+      mensaje: 'Ocurrió un error',
+      error
+    })
+  }
+});
+
+// PUT Usuario
+router.put('/usuario/:id', async(req, res) =>{
+  const _id = req.params.id;
+  const body = req.body;
+
+  try {
+    const usuarioDB = await User.findByIdAndUpdate(_id, body, {new: true, runValidators: true});
+    return res.json(usuarioDB);
+  } catch (error) {
+    return res.status(400).json({
       mensaje: 'Ocurrió un error',
       error
     })
