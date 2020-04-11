@@ -31,8 +31,8 @@ app.use(express.urlencoded({ extended: true })) //application/x-www-form-urlenco
 // app.get('/', function(req, res) {
 //   res.send('Hola Mundo!');
 // })
-
 app.use('/api', require('./routes/nota'));
+app.use('/api', require('./routes/user'));
 
 
 // Middleware para Vue.js router modo history
