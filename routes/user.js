@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 import User from '../models/user';
-
+// Middleware
 const { verificarAuth, verificarAdministrador } = require('../middlewares/autenticacion');
 
 // Hash Contraseña
