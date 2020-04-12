@@ -9,13 +9,28 @@ const verificarAuth = (req, res, next) => {
 
   jwt.verify(token, 'secret', (err, decoded) => {
     if (err) {
-      return res.status(400).json({
+      return res.status(401).json({
         mensaje: 'Usuario no válido'
       })
     }
+
+    req.usuario = decoded.data;
 
     next();
   });
 }
 
-module.exports = { verificarAuth }
+const verificarAdministrador = (req, res, next) => {
+  const rol = req.usuario.role;
+
+  if (rol === 'ADMIN') {
+    next();
+  } else {
+    return res.status(401).json({
+      mensaje: 'Usuario no válido. No es administrador'
+    })
+  }
+
+}
+
+module.exports = { verificarAuth, verificarAdministrador }
