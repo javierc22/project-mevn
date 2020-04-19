@@ -39,11 +39,32 @@ router.get('/nota/:id', async(req, res) => {
 });
 
 // Get con todos los documentos
+// router.get('/notas', verificarAuth, async(req, res) => {
+//   const usuarioId = req.usuario._id;
+//   try {
+//     const notasDB = await Nota.find({ usuarioId });
+//     res.json(notasDB);
+//   } catch (error) {
+//     return res.status(400).json({
+//       mensaje: 'Ocurrio un error',
+//       error
+//     });
+//   }
+// });
+
+// Get con paginación
 router.get('/notas', verificarAuth, async(req, res) => {
   const usuarioId = req.usuario._id;
+  const limite = Number(req.query.limite) || 5;
+  const skip = Number(req.query.skip) || 0;
+
   try {
-    const notasDB = await Nota.find({ usuarioId });
-    res.json(notasDB);
+    const notasDB = await Nota.find({ usuarioId }).limit(limite).skip(5);
+    
+    // contar documentos
+    const totalNotas = await Nota.find({usuarioId}).countDocuments();
+
+    res.json({notasDB, totalNotas});
   } catch (error) {
     return res.status(400).json({
       mensaje: 'Ocurrio un error',
