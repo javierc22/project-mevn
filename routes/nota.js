@@ -55,21 +55,22 @@ router.get('/nota/:id', async(req, res) => {
 // Get con paginación
 router.get('/notas', verificarAuth, async(req, res) => {
   const usuarioId = req.usuario._id;
-  const limite = Number(req.query.limite) || 5;
-  const skip = Number(req.query.skip) || 0;
+  const queryLimit = Number(req.query.limit) || 5;
+  const querySkip = Number(req.query.skip) || 0;
 
   try {
-    const notasDB = await Nota.find({ usuarioId }).limit(limite).skip(5);
-    
-    // contar documentos
+    const notasDB = await Nota.find({usuarioId}).skip(querySkip).limit(queryLimit);
+
+    // contar notas
     const totalNotas = await Nota.find({usuarioId}).countDocuments();
 
     res.json({notasDB, totalNotas});
+
   } catch (error) {
     return res.status(400).json({
       mensaje: 'Ocurrio un error',
       error
-    });
+    })
   }
 });
 
